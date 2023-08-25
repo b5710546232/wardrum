@@ -7,7 +7,6 @@ import (
 
 func TestOn(t *testing.T) {
 	emitter := events.NewEventEmitter()
-	ch := make(chan struct{})
 
 	// Define a flag to check if the handler was called
 	handlerCalled := false
@@ -18,7 +17,6 @@ func TestOn(t *testing.T) {
 		Handler: func(data interface{}) {
 			// Set the flag to true to indicate that the handler was called
 			handlerCalled = true
-			ch <- struct{}{}
 		},
 	}
 
@@ -27,7 +25,6 @@ func TestOn(t *testing.T) {
 
 	// Emit the event
 	emitter.Emit(eventName, nil)
-	<-ch
 	// Check if the handler was called
 	if !handlerCalled {
 		t.Errorf("Handler was not called for event %s", eventName)
