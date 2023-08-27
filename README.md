@@ -14,14 +14,16 @@ go get github.com/b5710546232/wardrum
 
 ```go
 func main() {
-	emitter := events.NewEventEmitter()
+	emitter := wardrum.NewEventEmitter[string](
+		wardrum.SetHistorySize[string](3),
+	)
 
-	emitter.On("exampleEvent", &events.Listener{
-		Handler: func(data interface{}) {
-			fmt.Println("Emitter - Received data:", data)
-		}})
+	listener := wardrum.NewListener(func(data string) {
+		fmt.Println("Received data:", data)
+	})
 
+	wardrum.On(emitter, "exampleEvent", listener)
 
-	emitter.Emit("exampleEvent", "Hello World!")
+	wardrum.Emit(emitter, "exampleEvent", "Hello world")
 }
 ```
