@@ -2,7 +2,8 @@ package events_test
 
 import (
 	"testing"
-	"wardrum/events"
+
+	"github.com/b5710546232/wardrum/events"
 )
 
 func TestOn(t *testing.T) {
